@@ -54,3 +54,10 @@ h3 { margin-top: 30px; }
 .reject:not(:disabled):hover { background: #c82333; }
 .accept { background: #28a745; }
 .accept:not(:disabled):hover { background: #218838; }
+.selected-desc {
+    height: 80px; /* Жестко резервируем высоту под текст */
+    margin-top: 12px;
+    font-size: 14px;
+    color: #0056b3; /* Можете изменить цвет текста */
+    line-height: 1.4;
+}
