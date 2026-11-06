@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Экспертная оценка стимульного материала</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Экран 1: Стартовая страница (Инструкция) -->
+<div id="start-screen" class="screen active">
+    <div class="content-container">
+        <h1>Экспертная оценка стимульного материала</h1>
+        <p>Добрый день!</p>
+        <p>Вам предстоит оценить набор изображений, отбираемых для психофизиологического исследования эмоций на российской выборке.</p>
+        <p>Ваша задача — определить, насколько естественно, прямолинейно и без искажений эти изображения будут восприниматься русскоязычными респондентами. Стимул не должен отвлекать внимание своей чужеродностью, экзотичностью, специфическими иностранными атрибутами или скрытыми подтекстами (мемами).</p>
+        
+        <h3>Как работать с интерфейсом:</h3>
+        <p>На рабочем экране вы увидите изображение, его текстовое описание и 3 шкалы оценки (от 1 до 5, где 5 — идеально подходит, 1 — категорически не подходит).</p>
+        <p>Чтобы не перегружать экран, полные расшифровки баллов скрыты. Если вы забудете критерии оценки, просто наведите курсор на иконку <strong>[ ? ]</strong> рядом с вопросом. При выборе оценки под ней появится ее расшифровка.</p>
+
+        <!-- Блок выбора роли (скрывается, если найдена сохраненная сессия) -->
+        <div class="role-selection" id="role-selection-block">
+            <p><strong>Укажите вашу роль для записи результатов:</strong></p>
+            <label><input type="radio" name="role" value="Экспертная оценка"> Экспертная оценка</label><br>
+            <label><input type="radio" name="role" value="Тестовый прогон"> Тестовый прогон (проверка интерфейса)</label>
+        </div>
+        
+        <button id="start-btn" disabled>Начать оценку</button>
+
+        <!-- Блок восстановления сессии (скрыт по умолчанию) -->
+        <div id="resume-block" style="display: none; background: #e9f2fb; border: 1px solid #b8daff; border-radius: 8px; padding: 25px; text-align: center; margin: 30px 0;">
+            <h3 style="color: #0056b3; margin-top: 0; margin-bottom: 10px;">Обнаружена прерванная сессия!</h3>
+            <p style="font-size: 16px; margin-bottom: 20px; font-weight: bold;">Вы остановились на картинке №<span id="resume-counter"></span>. Желаете продолжить или начать всё заново?</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button id="resume-btn" style="padding: 14px 24px; font-size: 16px; font-weight: bold; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s;">Продолжить</button>
+                <button id="reset-btn" style="padding: 14px 24px; font-size: 16px; font-weight: bold; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s;">Начать заново</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Экран 2: Рабочий интерфейс -->
+<div id="work-screen" class="screen">
+    <div class="split-layout">
+        <!-- Левая колонка (Зона стимула) -->
+        <div class="left-column">
+            <div id="counter" class="counter">Изображение 1 из 100</div>
+            <img id="stimulus-img" src="" alt="Стимул">
+            <h2 id="stimulus-title">Название</h2>
+        </div>
+
+        <!-- Правая колонка (Зона шкал) -->
+        <div class="right-column">
+            <!-- Вопрос 1 -->
+            <div class="q-block">
+                <div class="q-header">1. Универсальность и узнаваемость объекта 
+                    <span class="tooltip" data-title="Насколько представленный объект или сюжет узнаваем и понятен в рамках российского культурного контекста, даже если он не встречается в повседневном быту (например, экзотические животные, природные явления)?
+5 — Максимально узнаваемо и универсально. Объект считывается мгновенно, без когнитивного усилия. Отсутствует какая-либо культурная дистанция.
+4 — Скорее узнаваемо. Объект легко распознается и понятен, не требует дополнительных размышлений о том, что именно изображено.
+3 — Допустимая специфика. Объект распознается, но может потребовать небольшого осмысления из-за необычного ракурса или редкой категории.
+2 — Скорее чужеродно. Объект малознаком, трудно идентифицируется с первого взгляда или специфичен для иной культуры (вызывает вопрос «что это?»).
+1 — Полная культурная чужеродность. Объект совершенно непонятен российскому зрителю либо неразрывно связан со спецификой чужой культуры, из-за чего его первоначальный смысл не считывается.">[ ? ]</span>
+                </div>
+                <div class="scale-group">
+                    <div class="scale-labels"><span class="small-label">Полная культурная чужеродность</span><span class="small-label">Максимально узнаваемо</span></div>
+                    <div class="radio-scale">
+                        <label><input type="radio" name="q1" value="1"> 1</label>
+                        <label><input type="radio" name="q1" value="2"> 2</label>
+                        <label><input type="radio" name="q1" value="3"> 3</label>
+                        <label><input type="radio" name="q1" value="4"> 4</label>
+                        <label><input type="radio" name="q1" value="5"> 5</label>
+                    </div>
+                    <div id="desc-q1" class="selected-desc"></div>
+                </div>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div class="q-block">
+                <div class="q-header">2. Нейтральность контекста 
+                    <span class="tooltip" data-title="Присутствуют ли на изображении (на фоне или в деталях) элементы иностранного быта, которые перетягивают на себя внимание и отвлекают от восприятия основного стимула?
+5 — Идеально чисто. Контекст универсален. Взгляду не за что зацепиться, внимание зрителя полностью сфокусировано на главном объекте.
+4 — Скорее чисто. Мелкие специфические маркеры могут присутствовать, но они органично сливаются с фоном и совершенно не отвлекают на себя внимание.
+3 — Умеренное отвлечение. Иностранный контекст или необычные детали заметны, но они остаются фоновыми и не перебивают основную эмоцию.
+2 — Высокий уровень отвлечения. Специфические детали (непривычная дорожная разметка, вывески, форма окон) заставляют переключить фокус внимания с основного стимула на разглядывание окружения.
+1 — Ломающий контекст. Иностранные атрибуты полностью забирают внимание на себя. Зритель начинает изучать чужой быт и контекст, а не сам стимул.">[ ? ]</span>
+                </div>
+                <div class="scale-group">
+                    <div class="scale-labels"><span class="small-label">Ломающий контекст</span><span class="small-label">Идеально чисто</span></div>
+                    <div class="radio-scale">
+                        <label><input type="radio" name="q2" value="1"> 1</label>
+                        <label><input type="radio" name="q2" value="2"> 2</label>
+                        <label><input type="radio" name="q2" value="3"> 3</label>
+                        <label><input type="radio" name="q2" value="4"> 4</label>
+                        <label><input type="radio" name="q2" value="5"> 5</label>
+                    </div>
+                    <div id="desc-q2" class="selected-desc"></div>
+                </div>
+            </div>
+
+            <!-- Вопрос 3 -->
+            <div class="q-block">
+                <div class="q-header">3. Семантическая однозначность 
+                    <span class="tooltip" data-title="Присутствует ли риск возникновения побочных ассоциаций, связанных с конкретными историческими или политическими событиями, а также с элементами массовой медиакультуры?
+5 — Абсолютная семантическая однозначность. Изображение воспринимается исключительно буквально. Риск активации побочных культурных или социальных ассоциаций отсутствует.
+4 — Высокая однозначность. Изображение выглядит стандартно, вероятность возникновения поп-культурных или эпизодических ассоциаций минимальна.
+3 — Допустимая многозначность. Композиция может вызывать индивидуальные ассоциации, но они не являются устойчивым массовым паттерном для выборки.
+2 — Низкая однозначность (риск искажения). Изображение структурно схоже с известным визуальным шаблоном (кадром из фильма, интернет-феноменом), что может запустить побочные когнитивные процессы у части респондентов.
+1 — Наличие очевидного семантической неоднозначности. Изображение представляет собой узнаваемый культурный артефакт (известный медийный шаблон, мем, отсылка к политическому событию). Реакция будет обусловлена социальным контекстом, а не базовыми характеристиками стимула.">[ ? ]</span>
+                </div>
+                <div class="scale-group">
+                    <div class="scale-labels"><span class="small-label">Наличие подтекста</span><span class="small-label">Абсолютная однозначность</span></div>
+                    <div class="radio-scale">
+                        <label><input type="radio" name="q3" value="1"> 1</label>
+                        <label><input type="radio" name="q3" value="2"> 2</label>
+                        <label><input type="radio" name="q3" value="3"> 3</label>
+                        <label><input type="radio" name="q3" value="4"> 4</label>
+                        <label><input type="radio" name="q3" value="5"> 5</label>
+                    </div>
+                    <div id="desc-q3" class="selected-desc"></div>
+                </div>
+            </div>
+
+            <!-- Вопрос 0 (Соответствие описанию) -->
+            <div class="q-block">
+                <div class="q-header">0. Соответствие описания 
+                    <span class="tooltip" data-title="Действительно ли текстовое описание под картинкой соответствует тому, что на ней изображено?">[ ? ]</span>
+                </div>
+                <div class="scale-group">
+                    <div class="radio-scale match-scale">
+                        <label style="flex-direction: row; gap: 10px; width: auto;"><input type="radio" name="q0" value="Да"> Да</label>
+                        <label style="flex-direction: row; gap: 10px; width: auto;"><input type="radio" name="q0" value="Нет"> Нет</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-block">
+                <button id="add-comment-btn">+ Добавить комментарий</button>
+                <textarea id="comment-text" style="display:none;" placeholder="Ваш комментарий (если нужен)..."></textarea>
+            </div>
+
+            <div class="footer-buttons">
+                <button id="reject-btn" class="final-btn reject" disabled>ОТБРАКОВАТЬ</button>
+                <button id="accept-btn" class="final-btn accept" disabled>В БАЗУ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Экран 3: Финал -->
+<div id="finish-screen" class="screen">
+    <div class="content-container" style="text-align: center;">
+        <h1 style="color: #28a745; margin-bottom: 30px;">Оценка завершена!</h1>
+        <p style="font-size: 18px; margin-bottom: 20px;">Огромное спасибо за уделенное время и вашу экспертную оценку.</p>
+        <p style="font-size: 18px; margin-bottom: 20px;">Все ваши ответы успешно сохранены и отправлены в базу данных.</p>
+        <div style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+            <p style="font-size: 16px; color: #6c757d; font-weight: bold; margin: 0;">Теперь вы можете безопасно закрыть эту вкладку браузера.</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

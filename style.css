@@ -1,0 +1,56 @@
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body, html { margin: 0; padding: 0; background-color: #f4f6f8; color: #2c3e50; height: 100%; }
+
+/* Управление экранами */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Экран 1: Стартовый */
+.content-container { max-width: 800px; margin: 5vh auto; padding: 40px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 12px; line-height: 1.6; }
+h1 { text-align: center; margin-top: 0; color: #1a252f; }
+h3 { margin-top: 30px; }
+.role-selection { background: #f8f9fa; padding: 20px; border: 1px solid #e9ecef; border-radius: 8px; margin: 30px 0; }
+.role-selection label { display: block; margin: 10px 0; font-size: 16px; cursor: pointer; }
+#start-btn { width: 100%; padding: 18px; font-size: 20px; font-weight: bold; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+#start-btn:disabled { background: #b0c4de; cursor: not-allowed; }
+#start-btn:not(:disabled):hover { background: #0056b3; }
+
+/* Экран 2: Разделенный интерфейс */
+.split-layout { display: flex; height: 100vh; overflow: hidden; }
+/* Уменьшены отступы сверху и снизу для обеих колонок */
+.left-column { width: 45%; padding: 15px 30px; display: flex; flex-direction: column; align-items: center; border-right: 2px solid #e9ecef; background: #fff; overflow-y: auto; justify-content: flex-start; }
+.right-column { width: 55%; padding: 15px 30px; background: #fdfdfd; overflow-y: auto; }
+
+/* Левая колонка */
+.counter { font-size: 14px; color: #6c757d; margin-bottom: 10px; font-weight: bold; }
+#stimulus-img { width: 100%; max-width: 500px; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #dee2e6; background-color: #fff; }
+#stimulus-title { font-size: 24px; margin: 15px 0 0 0; text-align: center; font-weight: bold; }
+
+/* Правая колонка и шкалы - СЖАТО ПО ВЕРТИКАЛИ */
+.q-block { background: #fff; padding: 10px 20px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #e9ecef; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+.q-header { font-weight: bold; font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; margin-top: 0; }
+.tooltip { cursor: help; text-decoration: underline dotted #007bff; color: #007bff; font-weight: bold; padding: 2px 6px; font-size: 15px; }
+
+.tooltip:hover::after { content: attr(data-title); position: absolute; background: #fff; border: 1px solid #ccc; padding: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-radius: 8px; width: 450px; white-space: pre-line; z-index: 100; font-size: 14px; font-weight: normal; color: #333; margin-left: 20px; }
+
+.scale-group { display: flex; flex-direction: column; }
+.scale-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
+.radio-scale { display: flex; justify-content: space-between; background: #f8f9fa; padding: 8px 12px; border-radius: 8px; border: 1px solid #e9ecef; }
+.radio-scale label { display: flex; flex-direction: column; align-items: center; cursor: pointer; font-size: 16px; font-weight: bold; color: #495057; width: 100%; }
+.radio-scale input { margin-bottom: 4px; transform: scale(1.2); cursor: pointer; } /* Кружочки стали чуть меньше, отступы под ними тоже */
+
+/* Блок расшифровки под шкалой */
+.selected-desc { margin-top: 6px; font-size: 13px; line-height: 1.3; color: #0056b3; background-color: #e9f2fb; padding: 6px 10px; border-radius: 6px; display: none; border-left: 4px solid #007bff; }
+
+/* Подвал и финальные кнопки */
+.comment-block { margin: 5px 0 15px 0; }
+#add-comment-btn { background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-size: 14px; padding: 0; }
+#comment-text { width: 100%; height: 60px; margin-top: 8px; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; resize: vertical; font-size: 14px; } /* Высота поля уменьшена */
+
+.footer-buttons { display: flex; gap: 15px; margin-bottom: 10px; }
+.final-btn { flex: 1; padding: 14px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; color: white; text-transform: uppercase; } /* Кнопки стали тоньше */
+.final-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.reject { background: #dc3545; }
+.reject:not(:disabled):hover { background: #c82333; }
+.accept { background: #28a745; }
+.accept:not(:disabled):hover { background: #218838; }
