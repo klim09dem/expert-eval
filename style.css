@@ -55,11 +55,24 @@ h3 { margin-top: 30px; }
 .accept { background: #28a745; }
 .accept:not(:disabled):hover { background: #218838; }
 .selected-desc {
-    display: block !important; /* Заставляет браузер всегда рендерить блок, даже если он пустой */
-    height: 85px; /* Уменьшили высоту, жесткая фиксация вместо min-height */
+    display: block !important; /* Жестко запрещаем скриптам скрывать этот блок */
+    height: 70px; /* Уменьшили высоту, как вы просили */
     margin-top: 10px;
-    font-size: 14px;
-    color: #0056b3;
+    padding: 8px 12px; /* Добавили отступы, чтобы текст не прилипал к краям */
+    font-size: 13.5px;
     line-height: 1.3;
-    overflow: hidden; /* Гарантирует, что блок никогда не вылезет за эти 85px */
+    overflow: hidden; /* Обрезает лишнее, гарантируя, что блок не растянется */
+    
+    /* Делаем то самое постоянное "синее окошко" */
+    background-color: #f4f9ff; /* Очень легкий синий фон */
+    border: 1px dashed #b8daff; /* Пунктирная рамка для визуальной границы */
+    border-radius: 6px;
+    color: #004085; /* Темно-синий цвет для текста самой расшифровки */
+}
+
+/* Магия CSS: этот текст появляется ТОЛЬКО когда блок пустой */
+.selected-desc:empty::before {
+    content: "Выберите оценку, чтобы увидеть расшифровку критерия...";
+    color: #9cbadd; /* Бледный текст, сливающийся с фоном */
+    font-style: italic;
 }
